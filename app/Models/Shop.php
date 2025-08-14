@@ -43,6 +43,7 @@ class Shop extends Model
         'tenant_phone',
         'tenant_email',
         'is_interest_excluded',
+        'aadhar_verify'
     ];
     public function qrCodes()
     {
