@@ -138,3 +138,10 @@ $(document).ready(function () {
         }
     }
 });
+
+function checkStatus(){
+fetch('/check-aadhar-status')
+.then(response=>response.json())
+.then(data=>{
+})
+}

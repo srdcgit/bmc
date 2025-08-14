@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CollectionStaff\AadharVerificationController;
 use App\Http\Controllers\CronjobController;
 use App\Models\Payment;
 use App\Services\SmsService;
@@ -110,5 +111,7 @@ Route::get('test_sms', function() {
     return 'DONE';
   });
   // Route::get('logs', [LogViewerController::class, 'index']);
-// 
+//
   // Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+
+  Route::get('/check-aadhar-status',[AadharVerificationController::class,'checkStatus']);
