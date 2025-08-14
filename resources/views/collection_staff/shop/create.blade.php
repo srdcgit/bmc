@@ -336,4 +336,6 @@
         });
     </script>
     <script src="{{ asset('apis/aadhar-verification.js') }}"></script>
+
+    <script src="{{ asset('apis/fassai.js') }}"></script>
 @endsection
