@@ -1,6 +1,7 @@
 $(document).ready(function () {
     console.log('Document ready - jQuery is loaded');
 
+
     // Bind click event to the Verify button using its class
     $('.btn.btn-primary.ml-2').on('click', function (e) {
         e.preventDefault();
@@ -32,6 +33,8 @@ $(document).ready(function () {
             console.log('Validation failed: Invalid Aadhaar number');
             return;
         }
+
+
 
         console.log('Validation passed, initiating API call');
         try {
@@ -116,41 +119,73 @@ $(document).ready(function () {
 
         try {
             const response = await fetch(
-                `https://sandbox.surepass.app/api/v1/digilocker/download-aadhaar/${clientId}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc1NDk4NDU3MywianRpIjoiNmI0ZmNmYWQtZjIxYi00Yzc4LWJhM2QtN2FlYjM1NTc4ZWJmIiwidHlwZSI6ImFjY2VzcyIsImlkZW50aXR5IjoiZGV2LnNyaWRpcHRhcmVzZWFyY2hhbmRkZXZlbG9wbWVudGNvbnN1bHRhbmN5QHN1cmVwYXNzLmlvIiwibmJmIjoxNzU0OTg0NTczLCJleHAiOjE3NTc1NzY1NzMsImVtYWlsIjoic3JpZGlwdGFyZXNlYXJjaGFuZGRldmVsb3BtZW50Y29uc3VsdGFuY3lAc3VyZXBhc3MuaW8iLCJ0ZW5hbnRfaWQiOiJtYWluIiwidXNlcl9jbGFpbXMiOnsic2NvcGVzIjpbInVzZXIiXX19.CaDizhKxBYQ45dJtL93BVcEaXX8quNuRThBo3OQIITw'
+                `https://sandbox.surepass.app/api/v1/digilocker/download-aadhaar/${clientId}`,
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc1NDk4NDU3MywianRpIjoiNmI0ZmNmYWQtZjIxYi00Yzc4LWJhM2QtN2FlYjM1NTc4ZWJmIiwidHlwZSI6ImFjY2VzcyIsImlkZW50aXR5IjoiZGV2LnNyaWRpcHRhcmVzZWFyY2hhbmRkZXZlbG9wbWVudGNvbnN1bHRhbmN5QHN1cmVwYXNzLmlvIiwibmJmIjoxNzU0OTg0NTczLCJleHAiOjE3NTc1NzY1NzMsImVtYWlsIjoic3JpZGlwdGFyZXNlYXJjaGFuZGRldmVsb3BtZW50Y29uc3VsdGFuY3lAc3VyZXBhc3MuaW8iLCJ0ZW5hbnRfaWQiOiJtYWluIiwidXNlcl9jbGFpbXMiOnsic2NvcGVzIjpbInVzZXIiXX19.CaDizhKxBYQ45dJtL93BVcEaXX8quNuRThBo3OQIITw'
+                    }
                 }
-            });
+            );
 
             console.log('Download-aadhaar response status:', response.status);
             const data = await response.json();
-            document.getElementById("aadhar_verify").value = 1;
             console.log('Verified Aadhaar data:', JSON.stringify(data, null, 2));
-            let input = document.querySelector('input[name="id_proof_number"]');
-            input.style.border = "2px solid green";
-            input.style.backgroundImage = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%2300a000' viewBox='0 0 16 16'%3E%3Cpath d='M13.485 1.929l-7.071 7.071-3.536-3.536-1.414 1.414 4.95 4.95 8.485-8.485z'/%3E%3C/svg%3E\")";
-            input.style.backgroundRepeat = "no-repeat";
-            input.style.backgroundPosition = "right 10px center";
-            input.style.backgroundSize = "18px";
-            input.style.paddingRight = "35px";
-            if (response.ok) {
-                console.log('Verification successful, data received:', data.data?.aadhaar_xml_data);
+
+            if (response.ok && data.data?.aadhaar_xml_data) {
+                const a = data.data.aadhaar_xml_data;
+
+                // Base64 image handling
+                const profileImgSrc = a.profile_image
+                    ? `data:image/jpeg;base64,${a.profile_image}`
+                    : "";
+
+                // Build HTML table
+                let html = `
+                <div class="row">
+                    <div class="col-md-3 text-center">
+                        ${profileImgSrc ? `<img src="${profileImgSrc}" class="img-fluid rounded border" alt="Profile" />` : `<div class="text-muted">No Image</div>`}
+                    </div>
+                    <div class="col-md-9">
+                        <table class="table table-bordered">
+                            <tr><th>Full Name</th><td>${a.full_name}</td></tr>
+                            <tr><th>Care Of</th><td>${a.care_of}</td></tr>
+                            <tr><th>Date of Birth</th><td>${a.dob}</td></tr>
+                            <tr><th>Year of Birth</th><td>${a.yob}</td></tr>
+                            <tr><th>Gender</th><td>${a.gender}</td></tr>
+                            <tr><th>Masked Aadhaar</th><td>${a.masked_aadhaar}</td></tr>
+                            <tr><th>ZIP</th><td>${a.zip}</td></tr>
+                            <tr><th>Full Address</th><td>${a.full_address}</td></tr>
+                            <tr><th>Father's Name</th><td>${a.father_name ?? "N/A"}</td></tr>
+                            <tr><th>Country</th><td>${a.address.country}</td></tr>
+                            <tr><th>State</th><td>${a.address.state}</td></tr>
+                            <tr><th>District</th><td>${a.address.dist}</td></tr>
+                            <tr><th>Post Office</th><td>${a.address.po}</td></tr>
+                            <tr><th>House</th><td>${a.address.house}</td></tr>
+                            <tr><th>Locality</th><td>${a.address.loc}</td></tr>
+                            <tr><th>Street</th><td>${a.address.street}</td></tr>
+                            <tr><th>Landmark</th><td>${a.address.landmark}</td></tr>
+                        </table>
+                    </div>
+                </div>
+            `;
+
+                document.getElementById("aadhaarData").innerHTML = html;
+
+                // ✅ Show the modal
+                const modal = new bootstrap.Modal(document.getElementById('aadhaarModal'));
+                modal.show();
+                document.querySelector('input[name="id_proof_number"]').disabled = true;
+
             } else {
                 console.log('Verification error:', data.message);
+                alert("Unable to fetch Aadhaar details.");
             }
         } catch (error) {
             console.log('Fetch verified data error:', error);
+            alert("Error fetching Aadhaar details.");
         }
     }
-});
 
-function checkStatus() {
-    fetch('/check-aadhar-status')
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-        });
-}
-checkStatus();
+});

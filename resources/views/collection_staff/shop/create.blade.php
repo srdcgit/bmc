@@ -111,7 +111,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label>ID Proof</label>
-                                <select name="id_proof" class="form-control select-search" data-fouc required>
+                                <select name="id_proof" id="id_proof" class="form-control select-search" data-fouc required>
                                     <option selected disabled>Select ID Proof</option>
                                     <option value="PAN">PAN</option>
                                     <option value="Aadhar Card">Aadhar Card</option>
@@ -124,7 +124,7 @@
                                 <label>ID Proof Number</label>
                                 <div class="d-flex">
                                     <input name="id_proof_number" type="text" class="form-control" required>
-                                    <button type="button" class="btn btn-primary ml-2" data-toggle="button"
+                                    <button type="button" id="aadhar_verify" class="btn btn-primary ml-2" data-toggle="button"
                                         aria-pressed="false" autocomplete="off">
                                         Verify
                                     </button>
@@ -335,6 +335,7 @@
             });
         });
     </script>
+    @include('modals.aadhar')
     <script src="{{ asset('apis/aadhar-verification.js') }}"></script>
 
     <script src="{{ asset('apis/fassai.js') }}"></script>
