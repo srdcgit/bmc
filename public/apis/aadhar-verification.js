@@ -3,7 +3,7 @@ $(document).ready(function () {
 
 
     // Bind click event to the Verify button using its class
-    $('.btn.btn-primary.ml-2').on('click', function (e) {
+    $('#aadhar_verify').on('click', function (e) {
         e.preventDefault();
         console.log('Verify button clicked');
         verifyIdProof();
@@ -177,15 +177,15 @@ $(document).ready(function () {
                 const modal = new bootstrap.Modal(document.getElementById('aadhaarModal'));
                 modal.show();
                 document.querySelector('input[name="id_proof_number"]').disabled = true;
-                document.querySelector('input[name="aadhar_Verify"]').value = 1;
+                document.querySelector('input[name="aadhar_verify_status"]').value = 1;
 
             } else {
                 console.log('Verification error:', data.message);
-                alert("Unable to fetch Aadhaar details.");
+                // alert("Unable to fetch Aadhaar details.");
             }
         } catch (error) {
             console.log('Fetch verified data error:', error);
-            alert("Error fetching Aadhaar details.");
+            // alert("Error fetching Aadhaar details.");
         }
     }
 
