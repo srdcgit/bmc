@@ -126,8 +126,15 @@ $(document).ready(function () {
 
             console.log('Download-aadhaar response status:', response.status);
             const data = await response.json();
+            document.getElementById("aadhar_verify").value = 1;
             console.log('Verified Aadhaar data:', JSON.stringify(data, null, 2));
-
+            let input = document.querySelector('input[name="id_proof_number"]');
+            input.style.border = "2px solid green";
+            input.style.backgroundImage = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%2300a000' viewBox='0 0 16 16'%3E%3Cpath d='M13.485 1.929l-7.071 7.071-3.536-3.536-1.414 1.414 4.95 4.95 8.485-8.485z'/%3E%3C/svg%3E\")";
+            input.style.backgroundRepeat = "no-repeat";
+            input.style.backgroundPosition = "right 10px center";
+            input.style.backgroundSize = "18px";
+            input.style.paddingRight = "35px";
             if (response.ok) {
                 console.log('Verification successful, data received:', data.data?.aadhaar_xml_data);
             } else {
@@ -139,9 +146,11 @@ $(document).ready(function () {
     }
 });
 
-function checkStatus(){
-fetch('/check-aadhar-status')
-.then(response=>response.json())
-.then(data=>{
-})
+function checkStatus() {
+    fetch('/check-aadhar-status')
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+        });
 }
+checkStatus();
