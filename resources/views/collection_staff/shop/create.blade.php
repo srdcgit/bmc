@@ -192,10 +192,16 @@
                                 <input type="text" name="allotment_number" id="allotment_number" class="form-control"
                                     required>
                             </div>
+                            @include('modals.fassai')
                             <div class="form-group col-md-6">
-                                <label>Trade License Number</label>
-                                <input type="text" name="trade_license_number" id="trade_license_number"
-                                    class="form-control" required>
+                                <label>Fssai Number</label>
+                                <div class="d-flex ml-2">
+                                    <input type="text" name="trade_license_number" id="trade_license_number"
+                                        class="form-control" required>
+                                    <button type="button" id="verifyBtn" class="btn btn-primary ml-2">
+                                        Verify
+                                    </button>
+                                </div>
                             </div>
                         </div>
                         <div class="text-right">
