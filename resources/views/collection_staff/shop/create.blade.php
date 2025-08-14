@@ -120,6 +120,9 @@
                                     <option value="Driving License">SHG Registration No</option>
                                 </select>
                             </div>
+                            <input type="hidden" name="aadhar_verify" id="aadhar_verify_status"/>
+                            <input type="hidden" name="fassai_verify" id="fassai_verify"/>
+
                             <div class="form-group col-md-6">
                                 <label>ID Proof Number</label>
                                 <div class="d-flex">

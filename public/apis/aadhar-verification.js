@@ -177,6 +177,7 @@ $(document).ready(function () {
                 const modal = new bootstrap.Modal(document.getElementById('aadhaarModal'));
                 modal.show();
                 document.querySelector('input[name="id_proof_number"]').disabled = true;
+                document.querySelector('input[name="aadhar_Verify"]').value = 1;
 
             } else {
                 console.log('Verification error:', data.message);

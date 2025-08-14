@@ -46,6 +46,9 @@ document.getElementById("verifyBtn").addEventListener("click", async function ()
             // ✅ Open modal (Bootstrap 5 JS)
             const modal = new bootstrap.Modal(document.getElementById('fssaiModal'));
             modal.show();
+            document.querySelector('input[name="trade_license_number"]').disabled = true;
+            document.querySelector('input[name="fassai_verify"]').value = 1;
+
         } else {
             alert("No valid data found for this FSSAI number.");
         }

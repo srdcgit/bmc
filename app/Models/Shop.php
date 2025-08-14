@@ -43,7 +43,8 @@ class Shop extends Model
         'tenant_phone',
         'tenant_email',
         'is_interest_excluded',
-        'aadhar_verify'
+        'aadhar_verify',
+        'fassai_verify'
     ];
     public function qrCodes()
     {
@@ -140,7 +141,7 @@ class Shop extends Model
             $totalRent = $totalRent + round(($rentAmount + $duetax + $cam_charges)/100 * $dueAmountPercentage,2);
             $totalAmount = $totalAmount + ($amount - @$paidAmount);
             $payment->update([
-               'is_previous_payment' => 1 
+               'is_previous_payment' => 1
             ]);
         }
         $currentYear = Carbon::now()->year;
@@ -196,10 +197,10 @@ class Shop extends Model
             $totalAmount = $totalAmount + ($amount - @$paidAmount);
         }
         return [
-            'totalAmount' => $totalAmount, 
-            'totalPaidAmount' => $totalPaidAmount, 
-            'totalTax' => $totalTax, 
-            'totalRent' => $totalRent, 
+            'totalAmount' => $totalAmount,
+            'totalPaidAmount' => $totalPaidAmount,
+            'totalTax' => $totalTax,
+            'totalRent' => $totalRent,
         ];
     }
     public function getDuePayments()
