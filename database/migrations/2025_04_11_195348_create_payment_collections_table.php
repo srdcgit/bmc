@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('order_id')->nullable();
             $table->string('transcation_id')->nullable();
             $table->string('payment_method')->nullable();
+            $table->string('payment_mode')->nullable();
+            $table->date('payment_date')->nullable();
             $table->timestamps();
         });
     }

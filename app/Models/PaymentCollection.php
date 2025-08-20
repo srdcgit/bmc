@@ -9,13 +9,16 @@ class PaymentCollection extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'payment_id','amount',
+        'payment_id',
+        'amount',
         'order_id',
         'transcation_id',
+        'payment_method',
         'payment_mode',
+        'payment_date'
     ];
     public function payment()
     {
-        return $this->belongsTo(Payment::class,'payment_id');
+        return $this->belongsTo(Payment::class, 'payment_id');
     }
 }

@@ -179,6 +179,12 @@
 								<span>Payment</span>
 							</a>
 						</li>
+						<li class="nav-item">
+							<a href="{{route('collection_staff.manual_payment.index')}}" class="nav-link {{Request::is('collection_staff/manual_payment')?'active':''}}">
+								<i class="icon-home4"></i>
+								<span>Payment Manually</span>
+							</a>
+						</li>
 					</ul>
 				</div>
 				<!-- /main navigation -->

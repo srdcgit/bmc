@@ -1,6 +1,7 @@
 <?php
 /****************** COLLECTION STAFF MIDDLEWARE PAGES ROUTES START****************/
 
+use App\Http\Controllers\CollectionStaff\ManualPaymentController;
 use App\Http\Controllers\CollectionStaff\PaymentController;
 use App\Http\Controllers\CollectionStaff\ShopController;
 use App\Http\Controllers\CollectionStaff\StreetVendorController;
@@ -29,6 +30,13 @@ Route::group(['prefix' => 'collection_staff', 'as'=>'collection_staff.','middlew
     Route::get('payment/pending/{id}',[PaymentController::class,'pending'])->name('payment.pending');
     Route::resource('payment',PaymentController::class);
 
+    //manual payment
+    Route::get('manual_payment',[ManualPaymentController::class,'index'])->name('manual_payment.index');
+    Route::get('manual_payment/add',[ManualPaymentController::class,'add'])->name('manual_payment.add');
+    Route::post('manual_payment/store',[ManualPaymentController::class,'store'])->name('manual_payment.store');
+    // Route::get('manual_payment/edit/{id}',[ManualPaymentController::class,'edit'])->name('manual_payment.edit');
+    // Route::post('manual_payment/update/{id}',[ManualPaymentController::class,'update'])->name('manual_payment.update');
+    // Route::get('manual_payment/delete/{id}',[ManualPaymentController::class,'delete'])->name('manual_payment.delete');
     //street vendor
     Route::get('street_vendor',[StreetVendorController::class,'index'])->name('street_vendor.index');
     Route::get('street_vendor/add',[StreetVendorController::class,'add'])->name('street_vendor.add');
