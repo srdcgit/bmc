@@ -44,34 +44,27 @@
                     <!-- Payment Breakdown -->
                     <h6 class="text-primary border-bottom pb-2 mb-3">Payment Breakdown</h6>
                     <div class="row">
-                        <div class="form-group col-md-4">
-                            <label><strong>Amount</strong></label>
+                        <div class="form-group col-md-3">
+                            <label><strong>Amount including Tax & Other Charges</strong></label>
                             <input type="number" class="form-control" value="{{ $payment->amount }}" readonly>
                         </div>
-                        <div class="form-group col-md-4">
-                            <label><strong>CAM Charges</strong></label>
-                            <input type="number" class="form-control" value="{{ $payment->cam_charges }}" readonly>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label><strong>Tax</strong></label>
-                            <input type="number" class="form-control" value="{{ $payment->tax_amount }}" readonly>
-                        </div>
-                        <div class="form-group col-md-4">
+                        
+                        <div class="form-group col-md-3">
                             <label><strong>Total Payable</strong></label>
                             <input type="number" class="form-control bg-light font-weight-bold" value="{{ $totalPayment }}" readonly>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             <label><strong>Already Paid</strong></label>
                             <input type="number" class="form-control bg-light text-success font-weight-bold" value="{{ $paidAmount }}" readonly>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             <label><strong>Remaining Amount</strong></label>
                             <input type="number" class="form-control bg-light text-danger font-weight-bold" value="{{ $remainingAmount }}" readonly>
                         </div>
                     </div>
 
                     <!-- New Payment -->
-                    <h6 class="text-primary border-bottom pb-2 mb-3">Make Payment</h6>
+                    <h6 class="text-primary border-bottom pb-2 mb-3">Payment Details</h6>
                     <div class="row">
                         <div class="form-group col-md-4">
                             <label><strong>Payment Date</strong></label>
