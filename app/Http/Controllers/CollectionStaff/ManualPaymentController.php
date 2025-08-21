@@ -50,7 +50,7 @@ class ManualPaymentController extends Controller
         $payment = Payment::findOrFail($validated['payment_id']);
     
         // total expected = amount + cam_charges + tax
-        $totalPayable = $payment->amount + $payment->cam_charges + $payment->tax_amount;
+        $totalPayable = $payment->amount;
     
         // already paid
         $paidAmount = PaymentCollection::where('payment_id', $payment->id)->sum('amount');
@@ -104,7 +104,7 @@ class ManualPaymentController extends Controller
         $payment = Payment::findOrFail($id);
     
         // Calculate total expected from payment
-        $totalPayment = $payment->amount + $payment->cam_charges + $payment->tax_amount;
+        $totalPayment = $payment->amount ;
     
         // Get total paid so far from payment_collections
         $paidAmount = PaymentCollection::where('payment_id', $payment->id)->sum('amount');
