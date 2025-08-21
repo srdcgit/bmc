@@ -47,11 +47,11 @@ Manual Payment List
             <thead>
                 <tr>
                     <th>Sl. No</th>
-                    <th>Establishment Name</th>
+                    <th>Establishment</th>
                     <th>Shop Name</th>
                     <th>Shop Number</th>
                     <th>Owner Name</th>
-                    <th>Phone</th>
+                     <th>Month</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -60,10 +60,10 @@ Manual Payment List
                     <tr>
                         <td>{{ $key+1 }}</td>
                         <td>{{ $data->establishment->name ?? 'N/A' }}</td>
-                        <td>{{ $data->shop->shop_name ?? 'N/A' }}</td>
+                         <td>{{ $data->shop->shop_name ?? 'N/A' }}</td>
                         <td>{{ $data->shop_number ?? 'N/A' }}</td>
                         <td>{{ $data->owner_name }}</td>
-                        <td>{{ $data->phone }}</td>
+                        <td>{{ $data->month}}</td>
                         <td>
                             <a href="{{ route('collection_staff.manual_payment.edit',$data->id) }}" 
                                class="btn btn-sm btn-primary">Make Payment</a>
