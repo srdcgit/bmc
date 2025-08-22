@@ -68,6 +68,7 @@ class ManualPaymentController extends Controller
         // New order_id & transaction_id
         $original_order_id       = 'cash_' . rand(1000, 9999);
         $original_transaction_id = 'cash_transaction_' . rand(1000, 9999);
+        $original_receipt_number = 'bmc_' . rand(1000, 9999);
     
         // Save into payment_collections
         $collection = new PaymentCollection();
@@ -77,6 +78,8 @@ class ManualPaymentController extends Controller
         $collection->payment_mode   = 'Cash';
         $collection->order_id       = $original_order_id;
         $collection->transcation_id = $original_transaction_id;
+        $collection->receipt_number = $original_receipt_number;
+        $collection->interest = $validated['interest']; ;
         $collection->save();
     
         // ✅ Update interest in Payment table

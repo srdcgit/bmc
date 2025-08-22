@@ -15,7 +15,9 @@ class PaymentCollection extends Model
         'transcation_id',
         'payment_method',
         'payment_mode',
-        'payment_date'
+        'payment_date',
+        'interest',
+        'receipt_number'
     ];
     public function payment()
     {

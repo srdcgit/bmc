@@ -26,7 +26,7 @@ class PendingPaymentController extends Controller
             '2023-2024',
             '2024-2025',
         ];
-        return view('zdc.pending_payment.index',compact('years'));
+        return view('zdc.pending_payment.index', compact('years'));
     }
 
     /**
@@ -43,7 +43,7 @@ class PendingPaymentController extends Controller
             '2023/2024',
             '2024/2025',
         ];
-        return view('zdc.pending_payment.create',compact('years'));
+        return view('zdc.pending_payment.create', compact('years'));
     }
 
     /**
@@ -54,8 +54,8 @@ class PendingPaymentController extends Controller
      */
     public function store(Request $request)
     {
-        try{
-            $this->validate($request,[
+        try {
+            $this->validate($request, [
                 'amount' => 'required',
                 'shop_id' => 'required',
             ]);
@@ -67,6 +67,8 @@ class PendingPaymentController extends Controller
             } else {
                 $year = $currentYear;
             }
+            // Calculate total amount = arrear + tax
+            $totalAmount = $request->amount + $request->tax_amounts;
             Payment::create([
                 'month' => 'March',
                 'shop_id' => $shop->id,
@@ -84,8 +86,8 @@ class PendingPaymentController extends Controller
                 'is_paid' => 0,
                 'establishment_shop_id' => $shop->establishment_shop ? $shop->establishment_shop->id : $shop->establishment_shop_id,
                 'establishment_id' => $shop->establishment_shop ? $shop->establishment_shop->establishment_id  : $shop->establishment_id,
-                'amount' => number_format($request->amount, 2),
-                'tax_amount' =>$request->tax_amounts,
+                'amount' => number_format($totalAmount, 2, '.', ''),
+                'tax_amount' => $request->tax_amounts,
                 'cam_charges' => number_format(0, 2),
                 'shop_rent' => $shop->establishment_shop ? $shop->establishment_shop->shop_rent : $shop->shop_rent,
                 'shop_size' => $shop->establishment_shop ? $shop->establishment_shop->shop_size : $shop->shop_size,
@@ -94,8 +96,7 @@ class PendingPaymentController extends Controller
             ]);
             toastr()->success('Pending Payment Added Successfully');
             return redirect()->back();
-        }catch (Exception $e)
-        {
+        } catch (Exception $e) {
             toastr()->error($e->getMessage());
             return redirect()->back();
         }
@@ -128,7 +129,7 @@ class PendingPaymentController extends Controller
             '2023-2024',
             '2024-2025',
         ];
-        return view('zdc.pending_payment.edit',compact('pending_payment','years'));
+        return view('zdc.pending_payment.edit', compact('pending_payment', 'years'));
     }
 
     /**
@@ -138,19 +139,21 @@ class PendingPaymentController extends Controller
      * @param  \App\Models\PendingPayment  $pendingPayment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
         $pendingPayment = PendingPayment::find($id);
         $pendingPayment->update($request->all());
         $shop = Shop::find($request->shop_id);
-        $payment = Payment::where('pending_payment_id',$pendingPayment->id)->where('is_paid',0)->first();
-        
+        $payment = Payment::where('pending_payment_id', $pendingPayment->id)->where('is_paid', 0)->first();
+
         $currentYear = Carbon::now()->year;
         if (now()->month < 4) {
             $year = $currentYear - 1;
         } else {
             $year = $currentYear;
         }
+        // Calculate total amount = arrear + tax
+        $totalAmount = $request->amount + ($request->tax_amounts ?? 0);
         $payment->update([
             'month' => 'March',
             'shop_id' => $shop->id,
@@ -166,7 +169,7 @@ class PendingPaymentController extends Controller
             'is_paid' => 0,
             'establishment_shop_id' => $shop->establishment_shop ? $shop->establishment_shop->id : $shop->establishment_shop_id,
             'establishment_id' => $shop->establishment_shop ? $shop->establishment_shop->establishment_id  : $shop->establishment_id,
-            'amount' => number_format($request->amount, 2),
+            'amount' => number_format($totalAmount, 2, '.', ''),
             'tax_amount' => number_format($request->tax_amounts ?? 0, 2, '.', ''),
             'cam_charges' => number_format(0, 2),
             'shop_rent' => $shop->establishment_shop ? $shop->establishment_shop->shop_rent : $shop->shop_rent,
@@ -175,7 +178,7 @@ class PendingPaymentController extends Controller
             'shop_number' => $shop->establishment_shop ? $shop->establishment_shop->shop_number : $shop->shop_number,
         ]);
         toastr()->success('Pending Payment Updated successfully');
-        return redirect()->back(); 
+        return redirect()->back();
     }
 
     /**
@@ -187,9 +190,9 @@ class PendingPaymentController extends Controller
     public function destroy($id)
     {
         $pendingPayment = PendingPayment::find($id);
-        Payment::where('pending_payment_id',$pendingPayment->id)->where('is_paid',0)->delete();
+        Payment::where('pending_payment_id', $pendingPayment->id)->where('is_paid', 0)->delete();
         $pendingPayment->delete();
-        
+
         toastr()->success('Pending Payment Deleted successfully');
         return redirect()->back();
     }
